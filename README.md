@@ -32,3 +32,7 @@ again and should be considered retired.*
 Re-encumber funds on purchase order lines.
 
 Used when rollover failed to encumber funds in new fiscal year for open orders.
+
+### download-perms.py
+
+Download all permissions from a FOLIO instance and write them to a python dictionary that can be navigated like a JSON file.
