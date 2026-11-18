@@ -1,7 +1,7 @@
-#! /usr/local/bin/python3.7
-
-# This script will pull in functions that I've put in other scripts to make a file of
-# a list of permissions for any version of FOLIO and have it in a usable fashion.
+'''
+This downloads all of the permissions into a python dictionary which can be
+ navigated like a JSON file.
+'''
 
 import folioclient
 import requests
@@ -10,16 +10,25 @@ import logging
 import argparse
 import configparser
 
-# Set up logfiles, based on which host we're using.
+''' Set up logfiles, based on which host we're using.'''
 logging.basicConfig(filename='getpermsdebug.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
-#  Download all permissions from the server and put in outputfile
+'''  Download all permissions from the server and put in outputfile '''
 
 def get_permissions(fc:folioclient.FolioClient, perms_get_url:str):
     url = perms_get_url
     r = fc.folio_get(url)
     d = json.dumps(r, indent=4)
     return(d)
+
+'''
+This config parser is set up so that the config.ini file lists a base URL, with
+pathnames that come afterward. The okapi_base_url, for instance, would be the
+URL that connects to the tenant. The paths, such as login_path or perms_path, are the
+/remaining/path/to/api.  They are added together to make the correct url for the function.
+They are all listed under sections that refer to each server we have, which are named
+PRODUCTION, TEST, and MIGRATION.
+'''
 
 config = configparser.ConfigParser()
 config.read('config.ini')
